@@ -1,647 +1,551 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced GPA Calculator</title>
+    <title>مولد الأعذار الإحترافية</title>
     <style>
         :root {
-            --primary-color: #4a6fa5;
-            --secondary-color: #166088;
-            --accent-color: #4fc3f7;
-            --light-color: #f8f9fa;
-            --dark-color: #343a40;
-            --success-color: #28a745;
-            --warning-color: #ffc107;
-            --danger-color: #dc3545;
-        }
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --primary: #2c3e50;
+            --secondary: #e74c3c;
+            --accent: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
         }
         
         body {
-            background-color: #f5f7fa;
-            color: var(--dark-color);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--light);
+            text-align: center;
             padding: 20px;
         }
         
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px 0;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 700px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         h1 {
-            color: var(--primary-color);
+            font-size: 2.5rem;
             margin-bottom: 10px;
+            color: var(--accent);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
-        .description {
-            color: #666;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        
-        .student-info {
-            background-color: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        
-        .student-info input {
-            width: 70%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-top: 5px;
-        }
-        
-        .calculator-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+        .subtitle {
+            font-size: 1.1rem;
             margin-bottom: 30px;
+            opacity: 0.8;
         }
         
-        .courses-section, .results-section {
-            flex: 1;
-            min-width: 300px;
-            background-color: white;
+        .excuse-container {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
             padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        h2 {
-            color: var(--secondary-color);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
-        }
-        
-        .course-inputs {
-            margin-bottom: 20px;
-        }
-        
-        .course-row {
+            margin: 30px 0;
+            min-height: 150px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
             align-items: center;
+            justify-content: center;
+            position: relative;
+            border-left: 5px solid var(--secondary);
         }
         
-        .course-row input, .course-row select {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            flex: 1;
-            min-width: 120px;
-        }
-        
-        .course-row input:focus, .course-row select:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.2);
-        }
-        
-        .btn {
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--secondary-color);
-        }
-        
-        .btn-danger {
-            background-color: var(--danger-color);
-            color: white;
-        }
-        
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-        
-        .btn-success {
-            background-color: var(--success-color);
-            color: white;
-        }
-        
-        .btn-success:hover {
-            background-color: #218838;
-        }
-        
-        .btn-info {
-            background-color: #17a2b8;
-            color: white;
-        }
-        
-        .btn-info:hover {
-            background-color: #138496;
+        .excuse-text {
+            font-size: 1.4rem;
+            line-height: 1.6;
         }
         
         .buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            justify-content: center;
+            gap: 15px;
             flex-wrap: wrap;
-        }
-        
-        .result-display {
-            text-align: center;
-            padding: 20px;
             margin-top: 20px;
-            border-radius: 5px;
-            background-color: #f8f9fa;
         }
         
-        .gpa-value {
-            font-size: 3rem;
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
             font-weight: bold;
-            color: var(--primary-color);
-            margin: 10px 0;
         }
         
-        .grade-scale {
-            margin-top: 30px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        th {
-            background-color: var(--primary-color);
+        .generate-btn {
+            background: linear-gradient(to right, var(--accent), #e67e22);
             color: white;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.4);
         }
         
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+        .send-btn {
+            background: linear-gradient(to right, var(--secondary), #c0392b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .grade-comment {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            font-weight: bold;
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
         
-        .excellent {
-            background-color: rgba(40, 167, 69, 0.2);
-            color: var(--success-color);
+        button:active {
+            transform: translateY(1px);
         }
         
-        .good {
-            background-color: rgba(255, 193, 7, 0.2);
-            color: var(--warning-color);
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 0.8rem;
+            opacity: 0.5;
         }
         
-        .poor {
-            background-color: rgba(220, 53, 69, 0.2);
-            color: var(--danger-color);
+        .fake-email {
+            display: none;
+            margin-top: 30px;
+            background-color: white;
+            color: var(--dark);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: right;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
-        .input-mode {
+        .email-header {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
             margin-bottom: 15px;
         }
         
-        .input-mode label {
-            margin-left: 10px;
-            cursor: pointer;
+        .email-content {
+            line-height: 1.6;
         }
         
-        .input-mode input {
-            cursor: pointer;
+        .email-footer {
+            margin-top: 15px;
+            font-style: italic;
         }
         
-        @media (max-width: 768px) {
-            .calculator-container {
-                flex-direction: column;
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
             }
-            
-            .course-row input, .course-row select {
-                min-width: 100%;
-            }
-            
-            .buttons {
-                flex-direction: column;
-            }
-            
-            .buttons .btn {
-                width: 100%;
+            .excuse-text {
+                font-size: 1.2rem;
             }
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Advanced GPA Calculator</h1>
-            <p class="description">Calculate your GPA based on course grades and credit hours. You can enter grades as letters (A, B+) or as numeric values (3.75, 3.50)</p>
-
-        </header>
+        <h1>مولد الأعذار الإحترافية</h1>
+        <p class="subtitle">لحظات الغياب تحتاج إلى إبداع في التبرير!</p>
         
-        <div class="student-info">
-            <h2>Student Information</h2>
-            <div>
-                <label for="studentName">    Name:   </label>
-                <input type="text" id="studentName" placeholder="Enter your name">
-            </div>
-            <div style="margin-top: 10px;">
-                <label for="studentID">info:</label>
-                <input type="text" id="studentID" placeholder="semster num ">
-            </div>
+        <div class="excuse-container">
+            <p class="excuse-text" id="excuseText">اضغط على الزر لتوليد عذر إحترافي</p>
+            <span class="watermark">ExcuseGenerator™</span>
         </div>
         
-        <div class="calculator-container">
-            <section class="courses-section">
-                <h2>Course Data</h2>
-                
-                <div class="input-mode">
-                    <input type="radio" id="gradeMode" name="inputMode" value="grade" checked>
-                    <label for="gradeMode">Letter Grades (A, B+, etc.)</label>
-                    <br>
-                    <input type="radio" id="numberMode" name="inputMode" value="number">
-                    <label for="numberMode">Numeric Grades (4.00, 3.75, etc.)</label>
-                </div>
-                
-                <div class="course-inputs" id="courseInputs">
-                    <!-- Course rows will be added dynamically here -->
-                </div>
-                <div class="buttons">
-                    <button class="btn btn-primary" id="addCourse">Add Course</button>
-                    <button class="btn btn-danger" id="resetCourses">Reset</button>
-                    <button class="btn btn-success" id="calculateGPA">Calculate GPA</button>
-                    <button class="btn btn-info" id="exportPDF">Export as PDF</button>
-                </div>
-            </section>
-            
-            <section class="results-section">
-                <h2>Results</h2>
-                <div class="result-display">
-                    <p>Your GPA is:</p>
-                    <div class="gpa-value" id="gpaValue">0.00</div>
-                    <div class="grade-comment" id="gradeComment">Add courses then click "Calculate GPA"</div>
-                </div>
-                
-                <div class="grade-scale">
-                    <h3>Grade Scale</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Grade</th>
-                                <th>Numeric Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>A+</td>
-                                <td>4.00</td>
-                            </tr>
-                            <tr>
-                                <td>A</td>
-                                <td>3.75</td>
-                            </tr>
-                            <tr>
-                                <td>B+</td>
-                                <td>3.50</td>
-                            </tr>
-                            <tr>
-                                <td>B</td>
-                                <td>3.00</td>
-                            </tr>
-                            <tr>
-                                <td>C+</td>
-                                <td>2.75</td>
-                            </tr>
-                            <tr>
-                                <td>C</td>
-                                <td>2.50</td>
-                            </tr>
-                            <tr>
-                                <td>D+</td>
-                                <td>2.25</td>
-                            </tr>
-                            <tr>
-                                <td>D</td>
-                                <td>2.00</td>
-                            </tr>
-                            <tr>
-                                <td>F</td>
-                                <td>0.00</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
+        <div class="buttons">
+            <button class="generate-btn" id="generateBtn">توليد عذر جديد</button>
+            <button class="send-btn" id="sendBtn">
+                <span>إرسال للمدير</span>
+                ✉️
+            </button>
+        </div>
+        
+        <div class="fake-email" id="fakeEmail">
+            <div class="email-header">
+                <p>إلى: manager@company.com</p>
+                <p>من: employee@company.com</p>
+                <p>الموضوع: طلب إجازة/تأخير</p>
+            </div>
+            <div class="email-content" id="emailContent">
+                <!-- سيتم ملؤه بالجافاسكريبت -->
+            </div>
+            <div class="email-footer">
+                <p>مع خالص الإحترام،</p>
+                <p>الموظف المخلص</p>
+            </div>
         </div>
     </div>
-
+    
     <script>
-        // Initialize jsPDF
-        const { jsPDF } = window.jspdf;
+        // قاعدة بيانات الأعذار
+        const excuses = [
+    // ============ الأعذار التقنية (50) ============
+    "حاسوبي الشخصي أعلن إضرابًا عامًا اليوم",
+    "أحاول إصلاح خلل في نظام التحفيز الذاتي",
+    "الواي فاي الخاص بي يرفض الاتصال بشبكة المسؤولية",
+    "أجري تحديثًا طارئًا لنظام تشغيل دماغي",
+    "هاتفي الذكي أصبح غبيًا فجأة",
+    "أعاني من انهيار في خادم الطاقة الشخصي",
+    "أحاول استعادة ملفات الدافع المفقودة من سلة المحذوفات",
+    "لدي مشكلة في توصيل العقل بالجسد اليوم",
+    "أحل مشكلة توافق بين كرتي العين والنوم",
+    "البلوتوث بين أذني ودماغي غير متصل",
+    "أعاني من هجوم فيروسي على نظام الرغبة في العمل",
+    "أحاول تصليح عطل في كارت الشغف",
+    "معالج دماغي يعمل بسرعة أقل من المعتاد",
+    "أجري صيانة وقائية لأعصابي",
+    "أحاول إعادة تشغيل نظام الطاقة الشخصي",
+    "لدي مشكلة في تعريف كرت الإنتاجية",
+    "أعاني من تسرب في ذاكرة الوصول العشوائي",
+    "أحاول تحديث السوفتوير العاطفي",
+    "لدي تعارض بين برنامج العمل وبرنامج الراحة",
+    "أحل مشكلة في وصلة العقل باليدين",
+    "أعاني من انخفاض في جهد البطارية الداخلية",
+    "أحاول استعادة النظام من نقطة استعادة قديمة",
+    "لدي مشكلة في إقلاع نظام النشاط الصباحي",
+    "أعاني من شاشة زرقاء في دماغي",
+    "أحاول تفريغ ذاكرة التخزين المؤقت من التوتر",
+    "لدي مشكلة في توصيل لوحة المفاتيح بأصابعي",
+    "أعاني من فيروس كسل حاد",
+    "أحاول إصلاح مشكلة في إدارة الطاقة الشخصية",
+    "لدي تأخير في نقل البيانات بين الأذنين والدماغ",
+    "أعاني من ارتفاع في درجة حرارة المعالج العقلي",
+    "أحاول إعادة ضبط إعدادات الساعة البيولوجية",
+    "لدي مشكلة في تعريف محرك الأقراص الصلبة الشخصي",
+    "أعاني من توقف مفاجئ لجميع الأنظمة",
+    "أحاول حل مشكلة في إدارة المهام الذهنية",
+    "لدي ثغرة أمنية في نظام الحماية من الكسل",
+    "أعاني من انهيار في نظام الملفات الشخصي",
+    "أحاول إصلاح مشكلة في كابل الطاقة النفسية",
+    "لدي تأخير في استجابة وحدة المعالجة المركزية",
+    "أعاني من تشويش في إشارة الحماس",
+    "أحاول استعادة كلمة المرور للرغبة في العمل",
+    "لدي مشكلة في توصيل الشاشة بالواقع",
+    "أعاني من تعليق في نظام التشغيل اليومي",
+    "أحاول إصلاح مشكلة في إدارة الذاكرة العاطفية",
+    "لدي فيروس رفض العمل الإجباري",
+    "أعاني من تسرب في بطارية الحماس",
+    "أحاول حل مشكلة في إعدادات الصوت الداخلي",
+    "لدي مشكلة في تعريف كاميرا الرؤية الصباحية",
+    "أعاني من توقف وحدة المعالجة النفسية",
+    "أحاول إصلاح مشكلة في إدارة طاقة النهار",
+    "لدي تعارض بين برنامج النوم وبرنامج الاستيقاظ",
+
+    // ============ الأعذار الطبية (50) ============
+    "أعاني من حساسية مزمنة من أيام العمل",
+    "طبيبي شخص إصابتي بمتلازمة الاحتراق الوظيفي المبكر",
+    "أخضع لجلسة علاج طبيعي لإعادة تأهيل أصابعي للكتابة",
+    "أعاني من نزيف في الرغبة بالعمل",
+    "أخضع لفحوصات شاملة لسبب نفاد صبري المفاجئ",
+    "أعاني من كسور في الحماس الوظيفي",
+    "أجري عملية زرع طاقة اليوم",
+    "أعاني من انسداد في شرايين الإنتاجية",
+    "أخضع لعلاج كيميائي للكسل المزمن",
+    "أعاني من هشاشة في عظام المسؤولية",
+    "أجري أشعة مقطعية على دماغي للبحث عن الدافع",
+    "أعاني من ارتفاع مفاجئ في ضغط العمل",
+    "أخضع لجلسة تنويم مغناطيسي للبحث عن رغبتي في العمل",
+    "أعاني من تشوهات في جدول أعمالي",
+    "أجري تحاليل شاملة للكشف عن فيروس التعب",
+    "أعاني من التهابات حادة في مفاصل الإرادة",
+    "أخضع لعلاج فيزيائي لإعادة تأهيل كسلي",
+    "أعاني من حصوات في كليتي المسؤولية",
+    "أجري عملية قص وتعديل لساعات عملي",
+    "أعاني من نوبات قلبية كلما رأيت بريدي الإلكتروني",
+    "أخضع لعلاج نفسي لإدمان الراحة",
+    "أعاني من سمنة مفرطة في جدول أعمالي",
+    "أجري عملية تجميل لسيرتي الذاتية",
+    "أعاني من تشنجات في عضلات الإنتاجية",
+    "أخضع لعلاج طبيعي لاستعادة توازن حياتي",
+    "أعاني من قرحة معدية بسبب ضغوط العمل",
+    "أجري تحاليل للكشف عن نقص فيتامن الحماس",
+    "أعاني من حساسية جلدية من مقاعد المكتب",
+    "أخضع لعلاج إشعاعي للقضاء على خلايا الكسل",
+    "أعاني من ضعف في جهاز المناعة ضد العمل",
+    "أجري عملية زرع ذاكرة جديدة لنسيان ضغوط العمل",
+    "أعاني من هبوط حاد في الدورة الدموية للحماس",
+    "أخضع لعلاج طبيعي لإعادة تأهيل إرادتي",
+    "أعاني من التهابات في أعصاب الصبر",
+    "أجري فحوصات للكشف عن تليف في الرغبة بالعمل",
+    "أعاني من نزلات برد في علاقتي مع العمل",
+    "أخضع لجلسات علاج بالصدمات الكهربائية للحماس",
+    "أعاني من تشوهات خلقية في علاقتي مع المنبه",
+    "أجري عملية استئصال للجزء المسؤول عن الرغبة في العمل",
+    "أعاني من فقر دم بسبب نقص الحماس",
+    "أخضع لعلاج مكثف لإدمان النوم",
+    "أعاني من التهابات في مفاصل الكتابة",
+    "أجري عملية زرع مشاعر إيجابية نحو العمل",
+    "أعاني من حساسية من ضوء شاشة الكمبيوتر",
+    "أخضع لعلاج سلوكي للتغلب على خوفي من البريد الإلكتروني",
+    "أعاني من تشققات في جلد الصبر",
+    "أجري عملية تصغير لمعدل مسؤولياتي",
+    "أعاني من ضمور في عضلات الإنتاجية",
+    "أخضع لعلاج نفسي للتغلب على كرهي ليوم الأحد",
+    "أعاني من التهابات في أعصاب التحمل",
+    "أجري فحوصات للكشف عن سرطان الكسل",
+
+    // ============ الأعذار العائلية (50) ============
+    "عندي اجتماع طارئ مع وسادة سريري",
+    "أحل نزاعًا عائليًا بين حاسوبي الشخصي وهاتفي",
+    "أقيم مراسم تأبين لإجازتي المنتهية",
+    "أحتفل بالذكرى السنوية لأول مرة تأخرت فيها عن العمل",
+    "أخطط لحفل مفاجئ لبطارية لاب توبي المتوفاة",
+    "عندي اجتماع عائلي لتربية الذرية",
+    "أقيم حفلة مفاجئة لسمكتي الذهبية",
+    "أحاول حل نزاع بين قطتي ونباتات المنزل",
+    "أخي الصغير قرر أن يصبح مديري الشخصي",
+    "أختي العزيزة تزوجت من كسلها وأنا شاهد الزفاف",
+    "عندي اجتماع طارئ مع ثلاجتي الفارغة",
+    "أحاول حل مشكلة بين غسالة الملابس وناشفة الشعر",
+    "أحضر حفل تخرج كلبي من مدرسة الطاعة",
+    "أخطط لرحلة عائلية مع وسائد أريكتي",
+    "أحل مشكلة بين التلفاز والريموت كنترول",
+    "عندي اجتماع عائلي مع ثلاجتي لتنظيم محتوياتها",
+    "أحضر جلسة مصالحة بين ساعتي ومنبهي",
+    "أحتفل بعيد ميلاد حاسوبي الشخصي",
+    "أحاول حل نزاع بين كرتي العينين والنوم",
+    "عندي اجتماع طارئ مع سريري للتفاوض على مدة نوم إضافية",
+    "أحل مشكلة بين معطفي الشتوي وطقوس الصباح",
+    "أحضر جلسة علاج نفسي جماعي لأجهزتي الإلكترونية",
+    "أحتفل بالذكرى السنوية لشرائي لكوب القهوة المفضل",
+    "أحاول حل نزاع بين حذائي الأيمن والأيسر",
+    "عندي اجتماع طارئ مع ثلاجتي لمناقشة نقص الطعام",
+    "أحضر حفل زفاف جاري مع يوم إجازته",
+    "أحل مشكلة بين شاحن هاتفي ومقبس الكهرباء",
+    "أحتفل بإنجاب قطتي لقطط صغيرة",
+    "أحاول حل نزاع بين معجون الأسنان وفرشاتي",
+    "عندي اجتماع عائلي مع ملابسي لمناقشة نظام الغسيل",
+    "أحضر جلسة تأمل مع نباتاتي المنزلية",
+    "أحل مشكلة بين منبهي ورغبتي في النوم",
+    "أحتفل بالذكرى السنوية لشرائي لسجادة اليوجا",
+    "أحاول حل نزاع بين كرسي مكتبي ومؤخرتي",
+    "عندي اجتماع طارئ مع خزانة ملابسي لاختيار الزي المناسب",
+    "أحضر جلسة علاج طبيعي لسريري المعوج",
+    "أحل مشكلة بين قهوتي الصباحية ومعدتي",
+    "أحتفل بعيد ميلاد حذائي الرياضي",
+    "أحاول حل نزاع بين شاشة حاسوبي وعيناي",
+    "عندي اجتماع عائلي مع أجهزتي الذكية",
+    "أحضر جلسة مصالحة بين معطفي ومقص المطر",
+    "أحل مشكلة بين ساعتي الذكية وتقاعسي",
+    "أحتفل بالذكرى السنوية لشرائي لسماعات الأذن",
+    "أحاول حل نزاع بين حقيبتي ومفاتيحي",
+    "عندي اجتماع طارئ مع مكتبي لمناقشة فوضاه",
+    "أحضر جلسة تأمل مع وسادتي المفضلة",
+    "أحل مشكلة بين قلمي ودفتر ملاحظاتي",
+    "أحتفل بعيد ميلاد فرشاة أسناني",
+    "أحاول حل نزاع بين منشفتي وحمامي",
+    "عندي اجتماع عائلي مع أدوات المطبخ",
+
+    // ============ الأعذار النفسية (50) ============
+    "أعاني من صدمة بعد رؤية بريدي الإلكتروني الممتلئ",
+    "أجري محادثات علاجية مع كرسي مكتبي",
+    "أعاني من نوبات هلع من صوت التنبيهات",
+    "أمارس التأمل للبحث عن معنى الحياة الوظيفية",
+    "أحاول التغلب على رهاب الاجتماعات الافتراضية",
+    "أعاني من اكتئاب ما قبل الإجازة",
+    "أخضع لجلسة علاج نفسي لإدمان زر الغفوة",
+    "أعاني من قلق الانفصال عن سريري",
+    "أمارس اليوجا للبحث عن توازني المفقود",
+    "أحاول التغلب على خوفي من رسائل المدير",
+    "أعاني من اضطراب ما بعد الصدمة من اجتماعات الزوم",
+    "أخضع لعلاج سلوكي للتغلب على كسلي",
+    "أعاني من نوبات ذعر عند سماع جرس البريد الإلكتروني",
+    "أمارس التأمل للبحث عن حماسي المفقود",
+    "أحاول التغلب على إدماني للسرير",
+    "أعاني من اضطراب في الشخصية بين الموظف النشيط والكسول",
+    "أخضع لعلاج نفسي للتغلب على خوفي من المسؤوليات",
+    "أعاني من صدمة من كمية العمل المتراكم",
+    "أمارس تمارين التنفس للتعامل مع ضغوط العمل",
+    "أحاول التغلب على رغبتي الشديدة في عدم فعل شيء",
+    "أعاني من قلق أداء عند التفكير في العمل",
+    "أخضع لجلسات علاجية للتغلب على كرهي ليوم الاثنين",
+    "أعاني من نوبات قلق عند رؤية مواعيد التسليم",
+    "أمارس التأمل للبحث عن سلامي الداخلي",
+    "أحاول التغلب على إدماني للمماطلة",
+    "أعاني من اضطراب في النوم بسبب التفكير في العمل",
+    "أخضع لعلاج نفسي للتغلب على خوفي من الفشل",
+    "أعاني من صدمة من سرعة انتهاء الإجازة",
+    "أمارس اليوجا للتعامل مع توتر العمل",
+    "أحاول التغلب على رغبتي في الهروب من المسؤوليات",
+    "أعاني من قلق اجتماعي من زملاء العمل",
+    "أخضع لعلاج سلوكي للتغلب على عادة التأخير",
+    "أعاني من نوبات هلع عند التفكير في الاجتماعات",
+    "أمارس التأمل للبحث عن دافعي المفقود",
+    "أحاول التغلب على إدماني للراحة",
+    "أعاني من اضطراب في المزاج عند الاستيقاظ باكرًا",
+    "أخضع لعلاج نفسي للتغلب على كرهي للعمل المكتبي",
+    "أعاني من صدمة من كمية الإيميلات غير المقروءة",
+    "أمارس تمارين الاسترخاء للتعامل مع ضغوط العمل",
+    "أحاول التغلب على رغبتي في إلغاء جميع الاجتماعات",
+    "أعاني من قلق من فتح البريد الإلكتروني",
+    "أخضع لجلسات علاجية للتغلب على خوفي من المدير",
+    "أعاني من نوبات ذعر عند سماع جرس الهاتف",
+    "أمارس التأمل للبحث عن هدوئي المفقود",
+    "أحاول التغلب على إدماني للنوم",
+    "أعاني من اضطراب في النوم بسبب التفكير في المهام",
+    "أخضع لعلاج نفسي للتغلب على كرهي للعمل الجماعي",
+    "أعاني من صدمة من سرعة مرور وقت الإجازة",
+    "أمارس اليوجا للتعامل مع ضغوط المواعيد النهائية",
+    "أحاول التغلب على رغبتي في الاختفاء",
+
+    // ============ الأعذار الإبداعية (50) ============
+    "أشارك في مسابقة تصميم أفضل عذر للغياب",
+    "أكتب مذكرات بعنوان 'يوميات موظف منهك'",
+    "أحضر ورشة عمل عن فنون إضاعة الوقت",
+    "أطور نظرية جديدة عن نسبية وقت العمل",
+    "أسجل حلقة بودكاست عن 'كيف لا تعمل بجد'",
+    "أصمم لعبة عن موظف يهرب من العمل",
+    "أكتب مسرحية عن مأساة الموظف صباح الاثنين",
+    "أحضر معرضًا لأفضل الأعذار الإبداعية",
+    "أطور تطبيقًا لتوليد أعذار عشوائية",
+    "أقيم معرضًا فنيًا عن معاناة الموظفين",
+    "أكتب قصيدة عن جمال النوم صباحًا",
+    "أصمم ملصقات تحفيزية للكسالى",
+    "أحضر مؤتمرًا عالميًا عن المماطلة",
+    "أطور نظرية رياضية عن علاقة النوم بالإنتاجية",
+    "أسجل فيديو موسيقي عن كره العمل",
+    "أكتب رواية عن موظف لا يذهب للعمل أبدًا",
+    "أصمم خطوطًا عربية مستوحاة من شكل الوسادة",
+    "أحضر ورشة عمل عن فنون النوم في المكتب",
+    "أطور لعبة عن موظف يتهرب من الاجتماعات",
+    "أسجل سلسلة فيديوهات عن حيل للخروج من العمل مبكرًا",
+    "أكتب مقالاً عن فلسفة الكسل",
+    "أصمم شعارًا لحركة أبطأ في العمل",
+    "أحضر ندوة عن فوائد عدم فعل شيء",
+    "أطور طريقة جديدة لقياس درجات الكسل",
+    "أسجل أغنية عن جمال الإجازات",
+    "أكتب كتابًا عن تاريخ الأعذار عبر العصور",
+    "أصمم ملابس مريحة للنوم في المكتب",
+    "أحضر مؤتمرًا عن مستقبل العمل من السرير",
+    "أطور نظرية نفسية عن علاقة السرير بالإنتاجية",
+    "أسجل فيديو تعليمي عن كيف تتغيب عن العمل بذكاء",
+    "أكتب مدونة عن تجربتي مع 100 عذر مختلف",
+    "أصمم بطاقات معايدة بأفضل الأعذار",
+    "أحضر ورشة عمل عن كتابة رسائل الغياب الإبداعية",
+    "أطور تطبيقًا لقياس درجة إقناع الأعذار",
+    "أسجل بودكاست عن حياة بلا عمل",
+    "أكتب سيناريو فيلم عن موظف يهرب من دوامه",
+    "أصمم ملصقات تحذيرية عن خطر العمل الجاد",
+    "أحضر معرضًا للفن التجريدي المستوحى من الكسل",
+    "أطور نظرية اقتصادية عن فوائد الكسل",
+    "أسجل أغنية راب عن معاناة الاستيقاظ باكرًا",
+    "أكتب دليلًا عن كيف  تتغيب عن العمل دون أن تلاحظ",
+    "أصمم أزياء مكتبية مستوحاة من الملابس النوم",
+    "أحضر مؤتمرًا عن العبقرية والكسل",
+    "أطور لعبة عن موظف يبحث عن أفضل الأعذار",
+    "أسجل فيديو كليب عن إجازة أبدية",
+    "أكتب مسلسلاً عن حياة الموظف الكسول",
+    "أصمم مجلة عن ثقافة الراحة",
+    "أحضر ورشة عمل عن فنون النوم أثناء الاجتماعات",
+    "أطور طريقة جديدة لقياس درجات النعاس",
+    "أسجل سلسلة بودكاست عن حياة بدون مسؤوليات",
+
+    // ============ الأعذار الفلسفية (50) ============
+    "أبحث عن الإجابة للسؤال الوجودي: لماذا أعمل؟",
+    "أحلل العلاقة بين الراتب والرغبة في البقاء",
+    "أثبت رياضياً أن اليوم ليس يوم عمل مناسب",
+    "أدرس ظاهرة انعدام الحماس الجماعي أيام الأحد",
+    "أستكشف نظرية المؤامرة حول دوام الجمعة",
+    "أبحث عن معنى الحياة خارج نطاق العمل",
+    "أحلل العلاقة بين السعادة والإنتاجية",
+    "أثبت فلسفياً أن النوم هو النشاط الأكثر إنتاجية",
+    "أدرس ظاهرة الكسل كحركة اجتماعية",
+    "أستكشف نظرية المؤامرة حول اختراع المنبه",
+    "أبحث عن الذات خارج إطار الوظيفة",
+    "أحلل العلاقة بين الوقت والسعادة في المكتب",
+    "أثبت علمياً أن السرير هو أفضل مكان للتفكير",
+    "أدرس فلسفة الراحة كحق إنساني أساسي",
+    "أستكشف نظرية المؤامرة حول جدول العمل الثماني ساعات",
+    "أبحث عن الحقيقة المطلقة وراء رغبتنا في الراحة",
+    "أحلل العلاقة بين العطلة والإبداع",
+    "أثبت رياضياً أن الإجازات قصيرة جداً",
+    "أدرس ظاهرة التثاؤب المعدي في الاجتماعات",
+    "أستكشف نظرية المؤامرة حول كراسي المكاتب غير المريحة",
+    "أبحث عن المعنى الحقيقي للإنتاجية",
+    "أحلل العلاقة بين الضجر والإبداع",
+    "أثبت فلسفياً أن العمل من المنزل أكثر إنسانية",
+    "أدرس ظاهرة نفاد الصبر قبل نهاية الدوام",
+    "أستكشف نظرية المؤامرة حول اختراع ساعات العمل",
+    "أبحث عن التوازن المثالي بين العمل والحياة",
+    "أحلل العلاقة بين عدد الاجتماعات والفعالية",
+    "أثبت علمياً أن القهوة هي الوقود الحقيقي للعمل",
+    "أدرس فلسفة المماطلة كفن راقٍ",
+    "أستكشف نظرية المؤامرة حول رسائل البريد الإلكتروني",
+    "أبحث عن الجمال في فنون التأجيل",
+    "أحلل العلاقة بين درجة حرارة المكتب والإنتاجية",
+    "أثبت رياضياً أن الإثنين هو أطول أيام الأسبوع",
+    "أدرس ظاهرة التحديق في الشاشة دون فعل شيء",
+    "أستكشف نظرية المؤامرة حول برامج المحادثة الجماعية",
+    "أبحث عن الحكمة في قيلولة ما بعد الظهر",
+    "أحلل العلاقة بين لون الجدران والرغبة في العمل",
+    "أثبت فلسفياً أن الإجازات يجب أن تكون حقاً مقدساً",
+    "أدرس ظاهرة العدوى العاطفية في أماكن العمل",
+    "أستكشف نظرية المؤامرة حول تقييمات الأداء",
+    "أبحث عن المعنى الروحي للراحة",
+    "أحلل العلاقة بين عدد المهام وجودة الأداء",
+    "أثبت علمياً أن الدماغ يعمل بشكل أفضل تحت الأغطية",
+    "أدرس فلسفةعن  فعل شيءكفن راقٍ",
+    "أستكشف نظرية المؤامرة حول اجتماعات الصباح الباكر",
+    "أبحث عن الحقيقة وراء مفهوم ساعات العمل المنتجة",
+    "أحلل العلاقة بين المسافة من المنزل والمكتب والسعادة",
+    "أثبت رياضياً أن نهاية الأسبوع قصيرة جداً",
+    "أدرس ظاهرة التثاؤب أثناء الاجتماعات المهمة",
+    "أستكشف نظرية المؤامرة حول تقويمات العمل"
+];
+        // عناصر DOM
+        const excuseText = document.getElementById('excuseText');
+        const generateBtn = document.getElementById('generateBtn');
+        const sendBtn = document.getElementById('sendBtn');
+        const fakeEmail = document.getElementById('fakeEmail');
+        const emailContent = document.getElementById('emailContent');
         
-        document.addEventListener('DOMContentLoaded', function() {
-            // Grade point mapping
-            const gradePoints = {
-                "A+": 4.00,
-                "A": 3.75,
-                "B+": 3.50,
-                "B": 3.00,
-                "C+": 2.75,
-                "C": 2.50,
-                "D+": 2.25,
-                "D": 2.00,
-                "F": 0.00
-            };
+        // توليد عذر عشوائي
+        function generateExcuse() {
+            const randomIndex = Math.floor(Math.random() * excuses.length);
+            excuseText.textContent = excuses[randomIndex];
+            return excuses[randomIndex];
+        }
+        
+        // إرسال البريد الوهمي
+        function sendFakeEmail() {
+            const currentExcuse = excuseText.textContent;
             
-            // DOM elements
-            const courseInputs = document.getElementById('courseInputs');
-            const addCourseBtn = document.getElementById('addCourse');
-            const resetCoursesBtn = document.getElementById('resetCourses');
-            const calculateGPABtn = document.getElementById('calculateGPA');
-            const exportPDFBtn = document.getElementById('exportPDF');
-            const gpaValue = document.getElementById('gpaValue');
-            const gradeComment = document.getElementById('gradeComment');
-            const gradeMode = document.getElementById('gradeMode');
-            const numberMode = document.getElementById('numberMode');
-            const studentNameInput = document.getElementById('studentName');
-            const studentIDInput = document.getElementById('studentID');
+            emailContent.innerHTML = `
+                <p>السيد المدير الفاضل،</p>
+                <p>أرجو المعذرة عن عدم تمكني من الحضور اليوم بسبب:</p>
+                <p style="font-weight: bold; color: var(--secondary); margin: 10px 0;">"${currentExcuse}"</p>
+                <p>أتمنى أن تجد هذا العذر مقنعًا كفاية، وسأكون ممتنًا لو تقبل اعتذاري.</p>
+            `;
             
-            // Add initial course row
-            addCourseRow();
+            fakeEmail.style.display = 'block';
             
-            // Event listeners
-            addCourseBtn.addEventListener('click', addCourseRow);
-            resetCoursesBtn.addEventListener('click', resetCourses);
-            calculateGPABtn.addEventListener('click', calculateGPA);
-            exportPDFBtn.addEventListener('click', exportToPDF);
-            gradeMode.addEventListener('change', switchInputMode);
-            numberMode.addEventListener('change', switchInputMode);
-            
-            // Functions
-            function addCourseRow() {
-                const courseRow = document.createElement('div');
-                courseRow.className = 'course-row';
-                
-                if(gradeMode.checked) {
-                    courseRow.innerHTML = `
-                        <input type="text" placeholder="Course Name" class="course-name">
-                        <select class="course-grade">
-                            ${Object.keys(gradePoints).map(grade => 
-                                `<option value="${grade}">${grade}</option>`
-                            ).join('')}
-                        </select>
-                        <input type="number" placeholder="Credit Hours" class="course-credits" min="0.5" max="10" step="0.5" value="3">
-                        <button class="btn btn-danger remove-course" style="padding: 10px;">×</button>
-                    `;
-                } else {
-                    courseRow.innerHTML = `
-                        <input type="text" placeholder="Course Name" class="course-name">
-                        <input type="number" placeholder="Grade Value (e.g. 3.75)" class="course-grade" min="0" max="4" step="0.01" value="3.75">
-                        <input type="number" placeholder="Credit Hours" class="course-credits" min="0.5" max="10" step="0.5" value="3">
-                        <button class="btn btn-danger remove-course" style="padding: 10px;">×</button>
-                    `;
-                }
-                
-                courseInputs.appendChild(courseRow);
-                
-                // Add event listener to remove button
-                courseRow.querySelector('.remove-course').addEventListener('click', function() {
-                    courseInputs.removeChild(courseRow);
-                });
-            }
-            
-            function resetCourses() {
-                courseInputs.innerHTML = '';
-                addCourseRow();
-                gpaValue.textContent = '0.00';
-                gradeComment.textContent = 'Add courses then click "Calculate GPA"';
-                gradeComment.className = 'grade-comment';
-            }
-            
-            function switchInputMode() {
-                const currentRows = document.querySelectorAll('.course-row');
-                courseInputs.innerHTML = '';
-                
-                // Re-add all rows with the new input mode
-                currentRows.forEach(() => addCourseRow());
-            }
-            
-            function calculateGPA() {
-                const courseRows = document.querySelectorAll('.course-row');
-                let totalGradePoints = 0;
-                let totalCredits = 0;
-                let hasInvalidInput = false;
-                
-                courseRows.forEach(row => {
-                    const creditsInput = row.querySelector('.course-credits');
-                    const credits = parseFloat(creditsInput.value);
-                    
-                    // Validate credits
-                    if (isNaN(credits) || credits <= 0) {
-                        creditsInput.style.borderColor = 'red';
-                        hasInvalidInput = true;
-                        return;
-                    } else {
-                        creditsInput.style.borderColor = '#ddd';
-                    }
-                    
-                    let gradePoint;
-                    
-                    if(gradeMode.checked) {
-                        const grade = row.querySelector('.course-grade').value;
-                        gradePoint = gradePoints[grade];
-                    } else {
-                        const gradeInput = row.querySelector('.course-grade');
-                        gradePoint = parseFloat(gradeInput.value);
-                        
-                        // Validate grade input
-                        if (isNaN(gradePoint) || gradePoint < 0 || gradePoint > 4) {
-                            gradeInput.style.borderColor = 'red';
-                            hasInvalidInput = true;
-                            return;
-                        } else {
-                            gradeInput.style.borderColor = '#ddd';
-                        }
-                    }
-                    
-                    totalGradePoints += gradePoint * credits;
-                    totalCredits += credits;
-                });
-                
-                if (hasInvalidInput) {
-                    gradeComment.textContent = 'Please enter valid values for all courses';
-                    gradeComment.className = 'grade-comment poor';
-                    return;
-                }
-                
-                if (totalCredits === 0) {
-                    gpaValue.textContent = '0.00';
-                    gradeComment.textContent = 'Please add at least one course';
-                    gradeComment.className = 'grade-comment poor';
-                    return;
-                }
-                
-                const gpa = totalGradePoints / totalCredits;
-                const roundedGPA = gpa.toFixed(2);
-                
-                gpaValue.textContent = roundedGPA;
-                
-                // Add comment based on GPA
-                if (gpa >= 3.75) {
-                    gradeComment.textContent = 'Excellent! Great job!';
-                    gradeComment.className = 'grade-comment excellent';
-                } else if (gpa >= 3.0) {
-                    gradeComment.textContent = 'Good work! You\'re on the right track.';
-                    gradeComment.className = 'grade-comment good';
-                } else if (gpa >= 2.0) {
-                    gradeComment.textContent = 'You passed, but you can improve your grades.';
-                    gradeComment.className = 'grade-comment';
-                } else {
-                    gradeComment.textContent = 'We suggest seeking academic help to improve your performance.';
-                    gradeComment.className = 'grade-comment poor';
-                }
-            }
-            
-            function exportToPDF() {
-                // Check if GPA has been calculated
-                if (gpaValue.textContent === '0.00' && document.querySelectorAll('.course-row').length > 0) {
-                    gradeComment.textContent = 'Please calculate GPA before exporting';
-                    gradeComment.className = 'grade-comment poor';
-                    return;
-                }
-                
-                const doc = new jsPDF();
-                
-                // Add title
-                doc.setFontSize(20);
-                doc.setTextColor(74, 111, 165); // Primary color
-                doc.text('GPA Calculation Report  created by fikry :01552294082', 105, 20, { align: 'center' });
-                
-                
-                // Add student information
-                const studentName = studentNameInput.value || 'Not specified';
-                const studentID = studentIDInput.value || 'Not specified';
-                
-                doc.setFontSize(12);
-                doc.setTextColor(0, 0, 0);
-                doc.text(`Student Name: ${studentName}`, 20, 30);
-                doc.text(`Student ID: ${studentID}`, 20, 40);
-                
-                // Add date
-                doc.setFontSize(10);
-                doc.setTextColor(100, 100, 100);
-                doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 40, { align: 'center' });
-                
-                // Add GPA result
-                doc.setFontSize(16);
-                doc.setTextColor(0, 0, 0);
-                doc.text(`Your GPA: ${gpaValue.textContent}`, 105, 50, { align: 'center' });
-                
-                // Add grade comment
-                doc.setFontSize(12);
-                doc.text(gradeComment.textContent, 105, 60, { align: 'center' });
-                
-                // Prepare course data for table
-                const courseRows = document.querySelectorAll('.course-row');
-                const courseData = [];
-                
-                courseRows.forEach(row => {
-                    const name = row.querySelector('.course-name').value || 'Unnamed Course';
-                    let grade;
-                    
-                    if(gradeMode.checked) {
-                        grade = row.querySelector('.course-grade').value;
-                    } else {
-                        grade = row.querySelector('.course-grade').value;
-                    }
-                    
-                    const credits = row.querySelector('.course-credits').value;
-                    
-                    courseData.push([
-                        name,
-                        grade,
-                        credits
-                    ]);
-                });
-                
-                // Add course table
-                doc.autoTable({
-                    head: [['Course Name', 'Grade', 'Credit Hours']],
-                    body: courseData,
-                    startY: 70,
-                    theme: 'grid',
-                    headStyles: {
-                        fillColor: [74, 111, 165], // Primary color
-                        textColor: 255
-                    },
-                    alternateRowStyles: {
-                        fillColor: [240, 240, 240]
-                    }
-                });
-                
-                // Add grade scale table
-                doc.setFontSize(14);
-                doc.setTextColor(74, 111, 165);
-                doc.text('Grade Scale Reference', 105, doc.lastAutoTable.finalY + 20, { align: 'center' });
-                
-                const gradeScaleData = Object.entries(gradePoints).map(([grade, value]) => [grade, value.toFixed(2)]);
-                
-                doc.autoTable({
-                    head: [['Grade', 'Numeric Value']],
-                    body: gradeScaleData,
-                    startY: doc.lastAutoTable.finalY + 25,
-                    theme: 'grid',
-                    headStyles: {
-                        fillColor: [74, 111, 165],
-                        textColor: 255
-                    },
-                    alternateRowStyles: {
-                        fillColor: [240, 240, 240]
-                    }
-                });
-                
-                // Save the PDF
-                doc.save(`GPA_Report_${studentName.replace(/\s+/g, '_')}.pdf`);
-            }
-        });
+            // تأثيرات بعد الإرسال
+            sendBtn.innerHTML = '<span>تم الإرسال!</span> ✓';
+            setTimeout(() => {
+                sendBtn.innerHTML = '<span>إرسال للمدير</span> ✉️';
+            }, 2000);
+        }
+        
+        // أحداث الأزرار
+        generateBtn.addEventListener('click', generateExcuse);
+        sendBtn.addEventListener('click', sendFakeEmail);
+        
+        // توليد عذر عند تحميل الصفحة
+        generateExcuse();
     </script>
 </body>
 </html>
